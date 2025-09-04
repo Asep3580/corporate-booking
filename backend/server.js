@@ -103,7 +103,9 @@ const startServer = async () => {
         if (process.env.DATABASE_URL) {
             const { parse } = require('pg-connection-string');
             const dbConfig = parse(process.env.DATABASE_URL);
-            console.log(`ℹ️  Attempting to connect to database host: ${dbConfig.host}`);
+            // Censor password before logging the entire config for debugging
+            const { password, ...safeConfig } = dbConfig;
+            console.log('ℹ️  Parsed DB config being used:', safeConfig);
         }
 
         // 1. Test Database Connection
