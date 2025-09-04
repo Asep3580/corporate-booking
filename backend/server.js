@@ -98,6 +98,14 @@ initializeWebSocket(server);
 // --- Start Server after DB Connection ---
 const startServer = async () => {
     try {
+        // --- DEBUGGING: Log the database host to verify configuration ---
+        // IMPORTANT: This is for debugging purposes. Avoid logging sensitive data in production.
+        if (process.env.DATABASE_URL) {
+            const { parse } = require('pg-connection-string');
+            const dbConfig = parse(process.env.DATABASE_URL);
+            console.log(`ℹ️  Attempting to connect to database host: ${dbConfig.host}`);
+        }
+
         // 1. Test Database Connection
         const client = await pool.connect();
         console.log('✅ Successfully connected to the database.');
